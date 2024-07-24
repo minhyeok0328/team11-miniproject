@@ -1,0 +1,20 @@
+version: '3.8'
+
+networks:
+  spark-net:
+    driver: bridge
+
+services:
+  spark-worker:
+    image: bitnami/spark:3.5.1
+    container_name: spark-worker2
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://172.31.2.88:7077
+      - SPARK_WORKER_MEMORY=2G
+      - SPARK_WORKER_CORES=2
+    networks:
+      - spark-net
+    volumes:
+      - ./spark-data:/var/lib/spark/data
+
