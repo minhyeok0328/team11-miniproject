@@ -1,8 +1,10 @@
-from src.spark import Spark
-from src.config import SPARK_VERSION
+from src.app import TestSparkApp
 
 def main() -> None:
-    spark_test = Spark(topic='test_topic')
+    spark_app: list = [TestSparkApp]
+    
+    for app in spark_app:
+        app().run()
 
 if __name__ == '__main__':
     main()

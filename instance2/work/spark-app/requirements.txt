@@ -19,6 +19,7 @@ numpy==2.0.1
 pandas==2.2.2
 proto-plus==1.24.0
 protobuf==5.27.2
+psycopg2==2.9.9
 py4j==0.10.9.7
 pyarrow==17.0.0
 pyasn1==0.6.0

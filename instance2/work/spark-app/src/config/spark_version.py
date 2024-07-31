@@ -1,1 +1,0 @@
-SPARK_VERSION: str = '3.5.1'
