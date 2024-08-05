@@ -1,21 +1,23 @@
 version: '3.8'
 
-networks:
-  spark-net:
-    driver: bridge
-
 services:
   spark-master:
-    image: bitnami/spark:3.5.1
+    image: apache/spark:3.4.2
     container_name: spark-master
     ports:
-      - "8083:8083"  # Web UI port
-      - "7077:7077"  # Master port
+      - "8083:8083"
+      - "7077:7077"
     environment:
       - SPARK_MODE=master
-      - SPARK_MASTER_HOST=spark-master
-      - SPARK_MASTER_PORT=7077
       - SPARK_MASTER_WEBUI_PORT=8083
-      - SPARK_MASTER_OPTS="-Dspark.port.maxRetries=100"
-    networks:
-      - spark-net
+      - SPARK_MASTER_HOST=3.39.76.12
+      - SPARK_PY_EXECUTOR_URI=file:///opt/spark/python/pyspark
+      - SPARK_PYTHON=/opt/spark/python/bin/python3
+      - SPARK_LOCAL_IP=0.0.0.0
+    entrypoint: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master"]
+    command: [
+      "--host", "0.0.0.0",
+      "--port", "7077",
+      "--webui-port", "8083"
+    ]
+    restart: always

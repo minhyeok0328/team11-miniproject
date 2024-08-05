@@ -1,10 +1,9 @@
-version: '3.8'
 services:
   kafka-connect:
     build: .
     container_name: kafka-connect
     ports:
-      - 8083:8083
+      - 8081:8083
     environment:
       CONNECT_BOOTSTRAP_SERVERS: "172.31.2.88:9092,172.31.5.148:9092,172.31.9.18:9092"
       CONNECT_REST_PORT: 8083
@@ -23,22 +22,28 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: '/usr/share/java,/usr/share/confluent-hub-components'
-
+    restart: always
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.9.0
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
     ports:
       - "9200:9200"
+    restart: always
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.14.0
+    image: docker.elastic.co/kibana/kibana:8.9.0
     container_name: kibana
     ports:
       - "5601:5601"
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - xpack.security.enabled=false
     depends_on:
       - elasticsearch
-
+    restart: always

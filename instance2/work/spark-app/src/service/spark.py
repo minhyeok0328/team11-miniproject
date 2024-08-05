@@ -13,7 +13,7 @@ class Spark:
         conf: SparkConf = SparkConf() \
                             .setAppName(self.app_name) \
                             .setMaster(f'spark://{CONFIG["SPARK_MASTER_IP"]}:7077') \
-                            .set('spark.jars.packages', 'org.apache.spark:spark-sql-kafka-0-10_2.12:3.4.2,org.elasticsearch:elasticsearch-spark-20_2.12:7.13.2,org.postgresql:postgresql:42.2.23')
+                            .set('spark.jars.packages', 'org.apache.spark:spark-sql-kafka-0-10_2.12:3.4.2,org.elasticsearch:elasticsearch-spark-30_2.13:8.14.3,org.postgresql:postgresql:42.7.3')
         
         spark: SparkSession = SparkSession.builder \
             .config(conf=conf) \
